@@ -1,0 +1,72 @@
+﻿@model QuanLyPhongTro.Models.DAO.dangky
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="col-sm-12">
+        <h1>Dang KY</h1>
+    </div>
+    <div class="form-group">
+        <form id="register-form">
+            <div class="form-group">
+                @Html.Label("Tai khoan:");
+                @Html.TextBoxFor(Model => Model.userName);
+                @Html.ValidationMessageFor(Model => Model.userName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Mat khau:");
+                @Html.PasswordFor(Model => Model.passWord);
+                @Html.ValidationMessageFor(Model => Model.passWord, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Ho Ten:");
+                @Html.TextBoxFor(Model => Model.name);
+                @Html.ValidationMessageFor(Model => Model.name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Email:");
+                @Html.TextBoxFor(Model => Model.email);
+                @Html.ValidationMessageFor(Model => Model.email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("SoDienThoai:");
+                @Html.TextBoxFor(Model => Model.phone);
+                @Html.ValidationMessageFor(Model => Model.phone, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("SoDienThoai:");
+                @Html.TextBoxFor(Model => Model.address);
+                @Html.ValidationMessageFor(Model => Model.address, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("SoDienThoai:");
+                @Html.TextBoxFor(Model => Model.gender);
+                @Html.ValidationMessageFor(Model => Model.gender, "", new { @class = "text-danger" })
+            </div>
+            <a class="btn btn-primary" onclick="DangKy()">Register</a>
+        </form>
+    </div>
+</div>
+<script>
+    var DangKy = function () {
+        var data = $("#register-form").serialize();
+        if (!$("#register-form").valid()) {
+            return false;
+        }
+        $.ajax({
+            type: "Post",
+            url: "/DangKy/DangKy",
+            data: data,
+            success: function (check) {
+                if (check == true) {
+                    alert("Success");
+                }
+                else {
+                    alert("fail");
+                }
+            }
+        })
+    }
+</script>

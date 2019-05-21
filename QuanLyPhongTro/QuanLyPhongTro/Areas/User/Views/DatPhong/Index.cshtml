@@ -1,0 +1,417 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/adminStyle.css" rel="stylesheet" />
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img src="~/Content/img/logo.png" />
+            @*@Html.ActionLink("Quản Lý Phòng Trọ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+        </div>
+        <div class="navbar-collapse collapse" id="myMenu">
+
+            <ul class="nav navbar-nav navbar-nav--menu">
+                <li class="nav-item active">@Html.ActionLink("Trang Chủ", "Index", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Tìm Phòng", "Index", "DatPhong", new { @area = "User" }, new { @class = "" })</li>
+                <li class="nav-item">@Html.ActionLink("Xem Lịch Sử Đặt Phòng", "Index", "XemLichSuDatPhong", new { @area = "User" }, new { @class = "" })</li>
+                <li class="nav-item">
+                    @Session["taikhoan"],@Html.ActionLink("Đăng xuất", "Logout", "Login", new { @area = "" }, new { @class = "" })
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="col-sm-12">
+        <div class="col-sm-12">
+            <div class="panel-group" style="padding-top:8%;">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h2 class="title">Danh Sách Các Phòng Thuê Trọ</h2></div>
+                    <div class="panel-body">
+                        @if (ViewBag.DatPhong != null)
+                        {
+                            foreach (var item in ViewBag.DatPhong)
+                            {
+                                if (item.status == "empty")
+                                {
+                                    bool check = true;
+                                    if (ViewBag.ListPhongDaDat != null)
+                                    {
+                                        foreach (var item1 in ViewBag.ListPhongDaDat)
+                                        {
+                                            if (item.idRoom == item1.idRoom && item1.Status != 3)
+                                            {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (check == false)
+                                    {
+                                        <div class="col-sm-4">
+                                            <div class="col-sm-12 clear">
+                                                @if (item.image != null)
+                                                {
+                                                    <div class="col-sm-12 clear">
+                                                        <img src="data:image;base64,@System.Convert.ToBase64String(item.image)"
+                                                             width="320" , height="270" ; style="margin-left:auto;margin-right:auto;display:block; " />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-sm-12"></div>
+                                                }
+                                                <div class="col-sm-12"><h2 class="content-title">@item.nameroom</h2></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-modal-window"></i> Giá Phòng: @item.price</span></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-map-marker"></i> Địa Chỉ: @item.address</span></div>
+                                                <div class="col-sm-12 room-utility" style="padding-top:15px;">
+                                                    <span class="price-room">Tiện Ích: </span>
+                                                    <i class="glyphicon glyphicon room-utility-need" style="color:white;">64m2</i>
+                                                    <i class="glyphicon glyphicon-home room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-bed room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-user room-utility-need" style="color:white;"></i>
+                                                </div>
+                                                <div class="col-sm-12 room-hostel">
+                                                    <span class="content-detail-state">Tình Trạng Phòng:</span>
+                                                    @if (item.status == "empty")
+                                                    {
+                                                        <span style="color:gray;">Còn trống</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:lawngreen;">Đã đặt</span>
+                                                    }
+                                                </div>
+                                                <div class="col-sm-12 clear"><a class="btn btn-success" onclick="DatPhong(@item.idRoom)" style="display:none;">Đặt Phòng</a></div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4">
+                                            <div class="col-sm-12 clear">
+                                                @if (item.image != null)
+                                                {
+                                                    <div class="col-sm-12 clear">
+                                                        <img src="data:image;base64,@System.Convert.ToBase64String(item.image)"
+                                                             width="320" , height="270" ; style="margin-left:auto;margin-right:auto;display:block; " />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-sm-12"></div>
+                                                }
+                                                <div class="col-sm-12"><h2 class="content-title">@item.nameroom</h2></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-modal-window"></i> Giá Phòng: @item.price</span></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-map-marker"></i> Địa Chỉ: @item.address</span></div>
+                                                <div class="col-sm-12 room-utility" style="padding-top:15px;">
+                                                    <span class="price-room">Tiện Ích: </span>
+                                                    <i class="glyphicon glyphicon room-utility-need" style="color:white;">64m2</i>
+                                                    <i class="glyphicon glyphicon-home room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-bed room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-user room-utility-need" style="color:white;"></i>
+                                                </div>
+                                                <div class="col-sm-12 room-hostel">
+                                                    <span class="content-detail-state">Tình Trạng Phòng: </span>
+                                                    @if (item.status == "empty")
+                                                    {
+                                                        <span style="color:gray;">Còn trống</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:lawngreen;">Đã đặt</span>
+                                                    }
+                                                </div>
+                                                <div class="col-sm-12 clear"><a class="btn btn-success" onclick="DatPhong(@item.idRoom)">Đặt Phòng</a></div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-12 clear">
+                                            @if (item.image != null)
+                                            {
+                                                <div class="col-sm-12 clear">
+                                                    <img src="data:image;base64,@System.Convert.ToBase64String(item.image)"
+                                                         width="320" , height="270" ; style="margin-left:auto;margin-right:auto;display:block; " />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-sm-12"></div>
+                                            }
+                                            <div class="col-sm-12"><h2 class="content-title">@item.nameroom</h2></div>
+                                            <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-modal-window"></i> Giá Phòng: @item.price</span></div>
+                                            <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-map-marker"></i> Địa Chỉ: @item.address</span></div>
+                                            <div class="col-sm-12 room-utility" style="padding-top:15px;">
+                                                <span class="price-room">Tiện Ích: </span>
+                                                <i class="glyphicon glyphicon room-utility-need" style="color:white;">64m2</i>
+                                                <i class="glyphicon glyphicon-home room-utility-need" style="color:white;"></i>
+                                                <i class="glyphicon glyphicon-bed room-utility-need" style="color:white;"></i>
+                                                <i class="glyphicon glyphicon-user room-utility-need" style="color:white;"></i>
+                                            </div>
+                                            <div class="col-sm-12 room-hostel">
+                                                <span class="content-detail-state">Tình Trạng Phòng:</span>
+                                                @if (item.status == "empty")
+                                                {
+                                                    <span style="color:gray;">Còn trống</span>
+                                                }
+                                                else
+                                                {
+                                                    <span style="color:lawngreen;">Đã đặt</span>
+                                                }
+                                            </div>
+                                            <div class="col-sm-12 clear"><a class="btn btn-success" onclick="DatPhong(@item.idRoom)">Đặt Phòng</a></div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+            
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <div class="panel-group">
+                            <div class="panel panel-success">
+                    <div class="panel-heading"><h2 class="title">Danh Sách Các Phòng Cho Ở Ghép</h2></div>
+                    <div class="panel-body">
+                        @if (ViewBag.listPhongDoi != null)
+                        {
+                            foreach (var item in ViewBag.listPhongDoi)
+                            {
+                                if (item.status == "wait")
+                                {
+                                    bool check = true;
+                                    if (ViewBag.ListPhongDaDat != null)
+                                    {
+                                        foreach (var item1 in ViewBag.ListPhongDaDat)
+                                        {
+                                            if (item.idRoom == item1.idRoom)
+                                            {
+                                                check = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (check == false)
+                                    {
+                                        <div class="col-sm-4">
+                                            <div class="col-sm-12 clear">
+                                                @if (item.image != null)
+                                                {
+                                                    <div class="col-sm-12 clear">
+                                                        <img src="data:image;base64,@System.Convert.ToBase64String(item.image)"
+                                                             width="320" , height="270" ; style="margin-left:auto;margin-right:auto;display:block; " />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-sm-12"></div>
+                                                }
+                                                <div class="col-sm-12"><h2 class="content-title">@item.nameroom</h2></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-modal-window"></i> Giá Phòng: @item.price</span></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-map-marker"></i> Địa Chỉ: @item.address</span></div>
+                                                <div class="col-sm-12 room-utility" style="padding-top:15px;">
+                                                    <span class="price-room">Tiện Ích: </span>
+                                                    <i class="glyphicon glyphicon room-utility-need" style="color:white;">64m2</i>
+                                                    <i class="glyphicon glyphicon-home room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-bed room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-user room-utility-need" style="color:white;"></i>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @if (item.status == "wait")
+                                                    {
+                                                        <span style="color:gray;">Cần ở ghép</span>
+                                                    }
+
+                                                </div>
+                                                <div class="col-sm-12 clear"><a class="btn btn-success" onclick="DatPhong(@item.idRoom)" style="display:none;">Đặt Phòng</a></div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4">
+                                            <div class="col-sm-12 clear">
+                                                @if (item.image != null)
+                                                {
+                                                    <div class="col-sm-12 clear">
+                                                        <img src="data:image;base64,@System.Convert.ToBase64String(item.image)"
+                                                             width="320" , height="270" ; style="margin-left:auto;margin-right:auto;display:block; " />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-sm-12"></div>
+                                                }
+                                                <div class="col-sm-12"><h2 class="content-title">@item.nameroom</h2></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-modal-window"></i> Giá Phòng: @item.price</span></div>
+                                                <div class="col-sm-12"><span class="content-detail"><i class="glyphicon glyphicon-map-marker"></i> Địa Chỉ: @item.address</span></div>
+                                                <div class="col-sm-12 room-utility" style="padding-top:15px;">
+                                                    <span class="price-room">Tiện Ích: </span>
+                                                    <i class="glyphicon glyphicon room-utility-need" style="color:white;">64m2</i>
+                                                    <i class="glyphicon glyphicon-home room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-bed room-utility-need" style="color:white;"></i>
+                                                    <i class="glyphicon glyphicon-user room-utility-need" style="color:white;"></i>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @if (item.status == "wait")
+                                                    {
+                                                        <span style="color:gray;">Cần ở ghép</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:lawngreen;">Đã đặt</span>
+                                                    }
+                                                </div>
+                                                <div class="col-sm-12 clear"><a class="btn btn-success" onclick="DatPhongDoi(@item.idRoom)">Đặt Phòng Ghép</a></div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            }
+                        }
+                        </div>
+                    </div>
+                
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="GetID" />
+<input type="hidden" id="GetID1" />
+<div class="col-sm-12">
+    <div class="modal fade" id="booking-room">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal">&times;</a>
+                    <div class="modal-title">
+                        <h3>Xác nhận đặt phòng</h3>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h3> Bạn có muốn đặt phòng hay không ?</h3>
+                    <div class="" style="text-align:center; display:none" id="loading-gif">
+                        <img src="~/Content/img/loading-gif.gif" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" onclick="CancelBookingRoom()">Hủy</a>
+                    <a class="btn btn-danger" onclick="ConfirmBookingRoom()">Xác Nhận</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="modal fade" id="booking-room-doi">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal">&times;</a>
+                    <div class="modal-title">
+                        <h3>Xác nhận đặt phòng</h3>
+                    </div>
+                </div>
+                <div class="modal-body">    
+                    <h3> Bạn có muốn ở ghép với phòng này hay không ?</h3>
+                    <div class="" style="text-align:center; display:none" id="loading-gif1">
+                        <img src="~/Content/img/loading-gif.gif" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" onclick="CancelBookingRoomDoi()">Hủy</a>
+                    <a class="btn btn-danger" onclick="ConfirmBookingRoomDoi()">Xác Nhận</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var DatPhong = function (idRoom) {
+        $.ajax({
+            type: "Post",
+            url: "/User/DatPhong/CheckNumberOfRoom",
+            success: function (bool) {
+                if (bool == "true") {
+                    $("#booking-room").modal("show");
+                    $("#GetID").val(idRoom);
+                }
+                else {
+                    alert("Khong the dat qua 2 phong");
+                }
+            }
+        })
+
+
+    }
+    var CancelBookingRoom = function () {
+        $("#booking-room").modal("hide");
+    }
+    var ConfirmBookingRoom = function () {
+
+        $("#loading-gif").show();
+        var maPhong = $("#GetID").val();
+        $.ajax({
+            type: "Post",
+            url: "/User/DatPhong/BookingRoom",
+            data: { ID: maPhong },
+            success: function () {
+                if (!alert("Dat phong thanh cong")) { window.location.reload(); }
+            }
+        })
+    }
+    var DatPhongDoi = function (idRoom) {
+        $("#booking-room-doi").modal("show");
+        $("#GetID1").val(idRoom);
+    }
+    var CancelBookingRoomDoi = function () {
+        $("#booking-room-doi").modal("hide");
+    }
+
+    var ConfirmBookingRoomDoi = function () {
+        var ID = $("#GetID1").val();
+        $("#loading-gif1").show();
+        $.ajax({
+            type: "post",
+            url: "/User/DatPhong/ConfirmRoomOGhep",
+            data: { ID: ID },
+            succes: function (bool) {
+                if (bool = "") {
+                    if (!alert("thanh cong")) { window.location.reload(); }
+                }
+            }
+        })
+    }
+
+</script>
+
+
+
+

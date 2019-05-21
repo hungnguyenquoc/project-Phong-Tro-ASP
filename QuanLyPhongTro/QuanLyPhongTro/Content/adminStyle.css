@@ -1,0 +1,52 @@
+﻿body {
+    
+}
+.title {
+    font-weight: bold;
+    text-align: center;
+    color:black;
+}
+.content-title {
+    color: #00a261;
+    font-weight:bold;
+}
+.content-detail {
+    padding: 1% 0;
+    font-size: 16px;
+}
+.content-detail-state {
+    font-size: 16px;
+    font-weight: bold;
+}
+.room-hostel {
+    padding-top: 3%;
+}
+.clear {
+    padding-top: 3%;
+    text-align: center;
+}
+.price-room {
+    font-size: 16px;
+    color: black;
+    font-weight:bold;
+}
+.room-utility .room-utility-need {
+    font-size: 14px;
+    padding: 8px 10px;
+    background-color: #333333;
+    margin-left: 2px;
+    border: 1px solid transparent;
+    transition: all 0.5s;
+}
+.room-utility .room-utility-need {
+    font-size: 14px;
+    padding: 8px 10px;
+    background-color: #333333;
+    margin-left: 2px;
+    border: 1px solid transparent;
+    transition: all 0.5s;
+}
+    .room-utility .room-utility-need:hover {
+        background-color: darkgray;
+        border: 1px solid white;
+    }

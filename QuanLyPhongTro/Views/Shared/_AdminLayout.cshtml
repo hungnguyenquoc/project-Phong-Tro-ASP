@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/admin.css" rel="stylesheet" />
+    
+    @Scripts.Render("~/bundles/modernizr")
+    
+</head>
+<body>
+    @RenderPage("~/Views/Shared/_Admin.cshtml")
+
+    <div class="container-fluid body-content">
+        @RenderBody()
+    </div>
+    
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

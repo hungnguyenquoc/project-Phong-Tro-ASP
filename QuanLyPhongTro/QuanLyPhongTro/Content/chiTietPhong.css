@@ -1,0 +1,38 @@
+﻿body {
+}
+.room-content {
+    padding-top: 3%;
+}
+.room-content-title {
+    margin-left: 22%;
+    padding-top: 3%;
+}
+.room-content-title h1 {
+    color: #00a261;
+    font-weight: bold;
+}
+.room-content-title h3 {
+    font-weight: bold;
+}
+.room-content-title span {
+    font-size: 18px;
+}
+    .room-content-title button {
+        font-size: 23px;
+        margin-top: 4%;
+        text-align: center;
+        width: 34%;
+    }
+
+.footer {
+    background-color:grey;
+    color: black;
+    margin-top: 3%;
+}
+.footer-content {
+    text-align: center;
+    padding-top: 5%;
+}
+.footer .footer-content span {
+    font-weight:bold;
+}

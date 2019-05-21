@@ -1,0 +1,11 @@
+﻿
+@{
+    
+    Layout = null;
+}
+
+
+<div class="panel panel-success account-session">
+    <h4>Hello, @Session["taikhoan"] / @Html.ActionLink("Đăng xuất", "Logout", "Login", new { @area = "" }, new { @class = "blue-color" })</h4>
+</div>
+

@@ -1,0 +1,94 @@
+﻿import @model QuanLyPhongTro.Models.DAO.register
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/form.css" rel="stylesheet" />
+
+<div id="form">
+    <!-- Begin Header Form -->
+    <div id="header"></div>
+    <!-- End Header Form -->
+    <!-- Begin Title -->
+    <div id="title">
+        <h1 style="margin-left: 20px;">Đăng Ký Tài Khoản</h1>
+    </div>
+    <!-- End Title -->
+    <!-- Thong Tin Form -->
+    
+    <div id="form-thong-tin">
+        <div class="content-body">
+            <div class="col-md-8">
+                <div class="panel-group login-box">
+                    <div class="panel panel-success">
+                        <div class="panel-heading login-header"><h2 id="login-header-text"></h2></div>
+                        <div class="panel-body">
+                            <form id="register-form">
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Tài Khoản:")
+                                    @Html.TextBoxFor(Model => Model.userName, new { @class = "form-control", @placeholder = "Tài Khoản..." })
+                                    @Html.ValidationMessageFor(Model => Model.userName, "", new { @class = "text-danger" })
+                                </div>
+                                @*<div class="col-sm-12" style="width:auto; height:30px;"></div>*@
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Mật Khẩu:")
+                                    @Html.PasswordFor(Model => Model.passWord, new { @class = "form-control", @placeholder = "Mật Khẩu..." })
+                                    @Html.ValidationMessageFor(Model => Model.passWord, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Họ Tên:")
+                                    @Html.TextBoxFor(Model => Model.name, new { @class = "form-control", @placeholder = "Họ Tên" })
+                                    @Html.ValidationMessageFor(Model => Model.name, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Email:")
+                                    @Html.TextBoxFor(Model => Model.email, new { @class = "form-control", @placeholder = "Email" })
+                                    @Html.ValidationMessageFor(Model => Model.email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Số Điện Thoại:")
+                                    @Html.TextBoxFor(Model => Model.phone,new { @class = "form-control", @placeholder = "Số Điện Thoại"})
+                                    @Html.ValidationMessageFor(Model => Model.phone, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Địa Chỉ:")
+                                    @Html.TextBoxFor(Model => Model.address, new { @class = "form-control", @placeholder = "Địa Chỉ" })
+                                    @Html.ValidationMessageFor(Model => Model.address, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.Label("Giới Tính:")
+                                    @Html.TextBoxFor(Model => Model.gender, new { @class = "form-control", @placeholder = "Giới Tính" });
+                                    @Html.ValidationMessageFor(Model => Model.gender, "", new { @class = "text-danger" })
+                                </div>
+                                <a class="btn btn-primary" onclick="Register()">Register</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var Register = function () {
+        var data = $("#register-form").serialize();
+        if (!$("#register-form").valid()) {
+            return false;
+        }
+        $.ajax({
+            type: "Post",
+            url: "/Register/Register",
+            data: data,
+            success: function (check) {
+                if (check == "true") {
+                    alert("Success");
+                }
+                else {
+                    alert("fail");
+                }
+            }
+        })
+    }
+</script>

@@ -1,0 +1,229 @@
+﻿@model QuanLyPhongTro.Areas.Admin.Models.ListRoomDetailModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-3">123</div>
+        <div class="col-xs-9">
+            <div class="panel-group" style="margin-top:-62%;">
+                <div class="panel panel-success" style="font-weight:bold;">
+                    <div class="panel-heading"><h3>Danh Sách Các Phòng</h3></div>
+                    <a class="btn btn-success" onclick="AddRoom();"><i class="glyphicon glyphicon-plus"></i>Thêm Phòng Trọ</a>
+                    <div class="panel-body">
+                        <table class="img-responsive table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Id Phòng</th>
+                                    <th>Tên Phòng</th>
+                                    <th>Giá Phòng</th>
+                                    <th>Địa Chỉ Phòng</th>
+                                    <th>Vị Trí</th>
+                                    <th>Hình Ảnh</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Số Điện Thoại</th>
+
+                                </tr>
+                            </thead>
+                            @if (ViewBag.ListRoomAdmin != null)
+                            {
+                                foreach (var item in ViewBag.ListRoomAdmin)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>@item.idRoom</td>
+                                            <td>@item.nameroom</td>
+                                            <td>@item.price</td>
+                                            <td>@item.address</td>
+                                            <td>@item.location</td>
+                                            @if (item.image != null)
+                                            {
+                                                <td>
+                                                    <img src="data:image;base64,@System.Convert.ToBase64String(item.image)"
+                                                         width="320" height="270" style="margin-left:auto;margin-right:auto;display:block;" />
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+
+                                            <td>@item.status</td>
+                                            <td>@item.phone</td>
+                                            <td><a class="" style="cursor:pointer" onclick="Delete(@item.idRoom)"><i class="glyphicon glyphicon-trash">Xóa</i></a></td>
+                                        </tr>
+                                    </tbody>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* modal *@
+<div class="col-sm-12">
+    <div class="modal fade" id="add-room-detail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal">&times;</a>
+                    <div class="modal-title">
+                        <h3>Thêm Phòng Trọ</h3>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="InsertForm">
+
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-5">@Html.Label("Tên Phòng", new { @class = "label-style2" })</div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(Model => Model.Insert.tenPhong, new { @class = "form-control", @placeholder = "Tên tài khoản..." })
+                                @Html.ValidationMessageFor(Model => Model.Insert.tenPhong, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="width:auto; height:15px;"></div>
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-5">@Html.Label("Giá", new { @class = "label-style2" })</div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(Model => Model.Insert.gia, new { @class = "form-control", @placeholder = "Mật khẩu..." })
+                                @Html.ValidationMessageFor(Model => Model.Insert.gia, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="width:auto; height:15px;"></div>
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-5">@Html.Label("Địa Chỉ", new { @class = "label-style2" })</div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(Model => Model.Insert.diaChi, new { @class = "form-control", @placeholder = "Xác nhận mật khẩu..." })
+                                @Html.ValidationMessageFor(Model => Model.Insert.diaChi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="width:auto; height:15px;"></div>
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-5">@Html.Label("Vị Trí", new { @class = "label-style2" })</div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(Model => Model.Insert.viTri, new { @class = "form-control", @placeholder = "Xác nhận mật khẩu..." })
+                                @Html.ValidationMessageFor(Model => Model.Insert.viTri, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="width:auto; height:15px;"></div>
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-5">@Html.Label("Hình Ảnh", new { @class = "label-style2" })</div>
+                            @*<div class="col-sm-7">
+                                    @Html.TextBoxFor(Model => Model.hinhAnh, new { @class = "form-control", @placeholder = "Xác nhận mật khẩu..." })
+                                    @Html.ValidationMessageFor(Model => Model.hinhAnh, " ", new { @class = "text-danger" })
+                                </div>*@
+                            <div class="col-sm-7">
+                                <div class="btn btn-primary">
+                                    <input type="file" id="ImageBrowse1" accept="image/*" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" style="width:auto; height:15px;"></div>
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-5">@Html.Label("Số Điện Thoại", new { @class = "label-style2" })</div>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(Model => Model.Insert.soDienThoai, new { @class = "form-control", @placeholder = "Xác nhận mật khẩu..." })
+                                @Html.ValidationMessageFor(Model => Model.Insert.soDienThoai, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-sm-12" style="width:auto; height:15px;"></div>
+                    <div class="col-sm-12" style="display:none;" id="img-pre"><img id="ImagePreview" width="200" height="250" style="margin-left:auto;margin-right:auto;display:block;border:1px solid #eeeeee;" /></div>
+                    <div style="text-align:center;display:none;" id="loading-gif">
+
+                        <img src="~/Content/img/loading-gif.gif" />
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" onclick="HuyAddRoom()">Hủy</a>
+                    <a class="btn btn-danger" onclick="XacNhanAddRoom()">Xác Nhận</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* end modal *@
+
+<script>
+    //var Delete = function (ID) {
+    //    $.ajax({
+    //        type: "Post",
+    //        url: "/Admin/ListRoom/Delete",
+    //        data: { UserID: ID },
+    //        success: function (bool) {
+    //            if (bool == "true")
+    //                window.location.reload(true);
+    //        }
+    //    })
+    //}
+    var AddRoom = function () {
+        $("#add-room-detail").modal("show");
+    }
+    var HuyAddRoom = function () {
+        $("#Insert_idPhong").val("");
+        $("#Insert_tenPhong").val("");
+        $("#Insert_gia").val("");
+        $("#Insert_diaChi").val("");
+        $("#Insert_viTri").val("");
+        $("#ImageBrowse").val();
+        $("#Inser_trangThai").val();
+        $("#Insert_soDienThoai").val();
+        $("#add-room-detail").modal("hide");
+    }
+    var XacNhanAddRoom = function () {
+        if (!$("#InsertForm").valid()) {
+            return false;
+        }
+        $("#loading-gif").show();
+        if ($("#img-pre").is(":visible")) {
+            var file = $("#ImageBrowse").get(0).files;
+            var dataimg = new FormData;
+            dataimg.append("ImageGet", file[0]);
+            dataimg.append("Insert.idPhong", $("#Insert_idPhong").val());
+            dataimg.append("Insert.tenPhong", $("#Insert_tenPhong").val());
+            dataimg.append("Insert.gia", $("#Insert_gia").val());
+            dataimg.append("Insert.diaChi", $("#Insert_diaChi").val());
+            dataimg.append("Insert.viTri", $("#Insert_viTri").val());
+            dataimg.append("Insert.trangThai", $("#Insert_trangThai").val());
+            dataimg.append("Insert.soDienThoai", $("#Insert_soDienThoai").val());
+            $.ajax({
+                type: "Post",
+                url: "/Admin/ListRoom/InsertRoom",
+                data: dataimg,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    if (!alert("Thêm phòng thành công")) { window.location.reload(); }
+                }
+            })
+        }
+        else {
+            var dataimg = new FormData;
+            dataimg.append("Insert.idPhong", $("#Insert_idPhong").val());
+            dataimg.append("Insert.tenPhong", $("#Insert_tenPhong").val());
+            dataimg.append("Insert.gia", $("#Insert_gia").val());
+            dataimg.append("Insert.diaChi", $("#Insert_diaChi").val());
+            dataimg.append("Insert.viTri", $("#Insert_viTri").val());
+            dataimg.append("Insert.trangThai", $("#Insert_trangThai").val());
+            dataimg.append("Insert.soDienThoai", $("#Insert_soDienThoai").val());
+            $.ajax({
+                type: "Post",
+                url: "/Admin/ListRoom/InsertRoom",
+                data: dataimg,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    if (!alert("Thêm phòng thành công")) { window.location.reload(); }
+                }
+            })
+        }
+    }
+</script>
+

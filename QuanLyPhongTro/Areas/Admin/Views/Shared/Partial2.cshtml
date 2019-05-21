@@ -1,0 +1,38 @@
+﻿@model QuanLyPhongTro.Areas.Admin.Models.CustomerViewModel
+
+<div>
+    <form id="myForm">
+        @Html.HiddenFor(m => m.IDCus)
+        @Html.TextBoxFor(model => model.name, new { @class = "form-control", @placeholder = "Tên" })
+        @Html.TextBoxFor(model => model.address, new { @class = "form-control", @placeholder = "Tên" })
+        @Html.TextBoxFor(model => model.phone, new { @class = "form-control", @placeholder = "Tên" })
+        @Html.TextBoxFor(model => model.gender, new { @class = "form-control", @placeholder = "Tên" })
+        @Html.TextBoxFor(model => model.email, new { @class = "form-control", @placeholder = "Tên" })
+        @Html.TextBoxFor(model => model.username, new { @class = "form-control", @placeholder = "Tên" })
+
+        <a id"btnSubmit" class="btn btn-danger">@if (Model.IDCus > 0)
+        {<span>Update</span> }
+        else { <span>Save</span>}</a>
+    </form>
+    <div style="text-align:center; display:none" id="loaderDiv">
+        <img src="~/Assets/img/sidebar-1.jpg" />
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            $("#loadDiv").show();
+            var myformdata = $(#myForm).serialize();
+            $.ajax({
+                type: "Post",
+                url: "/Admin/QuanLyNguoiDung",
+                data: myformdata,
+                success: function () {
+                    $("#loadDiv").hide();
+                    $("#myModalBodyDiv1").load(url, function () {
+                        $("#myModal1").modal("show");
+                    }
+            })
+        })
+    })
+</script>

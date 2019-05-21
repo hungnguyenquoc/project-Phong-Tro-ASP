@@ -1,0 +1,35 @@
+﻿
+@{
+
+    Layout = null;
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img  src="~/Content/img/logo.png" />
+            @*@Html.ActionLink("Quản Lý Phòng Trọ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+        </div>
+        <div class="navbar-collapse collapse" id="myMenu">
+
+            <ul class="nav navbar-nav navbar-nav--menu" >
+
+                <li class="nav-item active">@Html.ActionLink("Trang Chủ", "Index", "Home")</li>
+                <li class="nav-item">@Html.ActionLink("Phòng Cho Thuê", "Index", "PhongChoThue")</li>
+                <li class="nav-item">@Html.ActionLink("Tìm Ở Ghép", "Index", "TimOGhep")</li>
+                <li class="nav-item">@Html.ActionLink("Đăng Nhập", "Index", "Login")</li>
+                <li class="nav-item">@Html.ActionLink("Đăng Ký","Index","Register")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+

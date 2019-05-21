@@ -1,0 +1,61 @@
+﻿
+@{ 
+    Layout = null;
+}
+
+<div class="container-fluid dashboard">
+    <div class="row">
+        
+        <div class="col-xs-3" id="sidebar">
+            <h1 style="font-weight: bold;text-align:center;">Quản Lý Phòng Trọ</h1>
+            <ul class="sidebar-title">
+                <li>
+                    <a class="active item-link" href="#home">
+                        <i class="glyphicon glyphicon-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="item-link" href="@Url.Action("Index","ListCustomer",new { @area="Admin"})">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>Quản Lý Người Dùng</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="item-link" href="@Url.Action("Index","ListRoom", new { @area="Admin"})">
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>Quản Lý Đăng Bài</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="item-link" href="@Url.Action("Index","ConfirmRoom",new { @area="Admin"})">
+                        <i class="glyphicon glyphicon-bed"></i>
+                        <span>Quản Lý Duyệt Phòng</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="item-link" href="@Url.Action("Logout","Login",new { @area =""})">
+                        @Session["taikhoan"]
+                        <i class="glyphicon glyphicon-log-out"></i>
+                        <span>Đăng Xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-9">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#" style="font-weight:bold;color: black">Trang Quản Lý Admin</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#"><i class="glyphicon glyphicon-dashboard" ></i></a></li>
+                        <li class=""><a href="#"><i class="glyphicon glyphicon-globe"></i></a></li>
+                        <li class=""><a href="#"><i class="glyphicon glyphicon-search"></i></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        
+    </div>
+</div>
